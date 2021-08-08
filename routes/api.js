@@ -20,7 +20,7 @@ router.get('/api/workouts', (req, res) => {
     });
 });
 
-//route for addExercise(data) from api.js
+//route for addExercise( ) from api.js
 router.put('/api/workouts/:id', async (req, res) => {
     Workout.findByIdAndUpdate(req.params.id,
       {
@@ -37,5 +37,39 @@ router.put('/api/workouts/:id', async (req, res) => {
         res.status(400).json(err);
       });
   });
-  
+
+    //route for createWorkout(data = {}) from api.js
+    router.post('/api/workouts', async (req, res) => {
+        Workout.create(req.body)
+          .then(dbWorkout => {
+            res.json(dbWorkout);
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
+      });
+      
+      
+      //route for getWorkoutsInRange() from api.js
+      router.get('/api/workouts/range', async (req, res) => {
+        Workout.aggregate([
+          {
+            $addFields: {
+              totalDuration: {
+                $sum: '$exercises.duration',
+              },
+            },
+          },
+        ])
+          .sort({ day: -1 })
+          .limit(7)
+          .sort({ day: 1 })
+          .then((dbWorkouts) => {
+            res.json(dbWorkouts);
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      });
+
 module.exports = router;
