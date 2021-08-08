@@ -20,5 +20,22 @@ router.get('/api/workouts', (req, res) => {
     });
 });
 
-
+//route for addExercise(data) from api.js
+router.put('/api/workouts/:id', async (req, res) => {
+    Workout.findByIdAndUpdate(req.params.id,
+      {
+        $push: { exercises: req.body }
+      },
+      { 
+        new: true 
+      },
+    )
+      .then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+  
 module.exports = router;
