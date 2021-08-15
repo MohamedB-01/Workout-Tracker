@@ -66,4 +66,4 @@ For inquiries, please contact m.m.bassiouni@gmail.com.
 https://github.com/MohamedB-01/Workout-Tracker
     
 ## Link to Deployed page
-https://mohamedb-workout-tracker.herokuapp.com/stats
+https://mohamedb-workout-tracker.herokuapp.com/exercise?id=61187dea7def4f0016d7d540
